@@ -33,7 +33,7 @@ public class App {
     }
 
     private static String getCommand(Scanner scanner) {
-        System.out.print("¬ведите оператор ( +  -  /  * ): ");
+        System.out.print("¬ведите оператор ( +,  -,  /,  *, ** ): ");
         return scanner.nextLine();
     }
 
@@ -43,6 +43,7 @@ public class App {
         if ("-".equals(command)) result = firstValue - secondValue;
         if ("/".equals(command)) result = firstValue / secondValue;
         if ("*".equals(command)) result = firstValue * secondValue;
+        if ("**".equals(command)) result = (int) Math.pow(firstValue, secondValue);
         return result;
     }
 
