@@ -1,40 +1,46 @@
 package org.example;
 
+import org.example.printer.ConsolePrinter;
+import org.example.validator.IOValidator;
+
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        boolean running = true;
+        ConsolePrinter printer = new ConsolePrinter();
+        IOValidator checker = new IOValidator();
         Scanner scanner = new Scanner(System.in);
 
         int firstValue;
         int secondValue;
         String command;
 
-        while (running) {
+        while (true){
             try {
-                firstValue = getValue(scanner, "Введите первое значение: ");
-                secondValue = getValue(scanner, "Введите второе значение: ");
-                command = getCommand(scanner);
+                // Ввод первого значения
+                printer.printInputFirstValue();
+                String inputValue = scanner.nextLine();
+                checker.checkInputValue(inputValue);
+                firstValue = Integer.parseInt(inputValue);
+
+                // Ввод второго значения
+                printer.printInputSecondValue();
+                inputValue = scanner.nextLine();
+                checker.checkInputValue(inputValue);
+                secondValue = Integer.parseInt(inputValue);
+
+                // Ввод оператора
+                printer.printInputCommand();
+                command = scanner.nextLine();
+                checker.checkInputValue(command);
+
+                // Подсчёт и вывод результата
                 int result = getResult(firstValue, secondValue, command);
-                printExpression(firstValue, secondValue, command, result);
-                String inputString = scanner.nextLine();
-                running = checkInputValue(inputString);
+                printer.printExpression(firstValue, secondValue, command, result);
             } catch (Exception e) {
                 System.out.println("Ввели неправильные данные");
             }
         }
-    }
-
-    private static int getValue(Scanner scanner, String message) {
-        System.out.print(message);
-        String inputValue = scanner.nextLine();
-        return Integer.parseInt(inputValue);
-    }
-
-    private static String getCommand(Scanner scanner) {
-        System.out.print("Введите оператор ( +,  -,  /,  *, ** ): ");
-        return scanner.nextLine();
     }
 
     private static int getResult(int firstValue, int secondValue, String command) {
@@ -43,17 +49,7 @@ public class App {
         if ("-".equals(command)) result = firstValue - secondValue;
         if ("/".equals(command)) result = firstValue / secondValue;
         if ("*".equals(command)) result = firstValue * secondValue;
-        if ("**".equals(command)) result = (int) Math.pow(firstValue, secondValue);
+        if ("**".equals(command)) result = (int) Math.pow(firstValue, secondValue); // добавил эту строку
         return result;
-    }
-
-    private static void printExpression(int firstValue, int secondValue, String command, int result) {
-        System.out.println("Полученное выражение: " + firstValue + " " + command + " " + secondValue + " = " + result);
-        System.out.println();
-        System.out.println("Для выхода набери: Exit");
-    }
-
-    private static boolean checkInputValue(String inputString) {
-        return !"Exit".equalsIgnoreCase(inputString);
     }
 }
