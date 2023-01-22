@@ -15,6 +15,19 @@ public class AppManager {
     private int secondValue;
     private String command;
 
+    public void runCalculator() {
+        while (true) {
+            try {
+                inputFirstValue();
+                inputSecondValue();
+                inputCommand();
+                outputResult();
+            } catch (Exception e) {
+                printer.printGeneralExceptionMessage();
+            }
+        }
+    }
+
     private void inputFirstValue() {
         printer.printInputFirstValue();
         String inputValue = scanner.nextLine();
@@ -38,18 +51,5 @@ public class AppManager {
     private void outputResult() {
         int result = evaluator.getResult(firstValue, secondValue, command);
         printer.printExpression(firstValue, secondValue, command, result);
-    }
-
-    public void runCalculator() {
-        while (true) {
-            try {
-                inputFirstValue();
-                inputSecondValue();
-                inputCommand();
-                outputResult();
-            } catch (Exception e) {
-                System.out.println("¬вели неправильные данные");
-            }
-        }
     }
 }
