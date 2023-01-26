@@ -1,5 +1,7 @@
 package org.example.printer;
 
+import org.example.evaluator.Evaluator;
+
 public class ConsolePrinter {
     private static final String INPUT_FIRST_VALUE = "Введите первое значение: ";
     private static final String INPUT_SECOND_VALUE = "Введите второе значение: ";
@@ -7,6 +9,7 @@ public class ConsolePrinter {
     private static final String RESULT_EXPRESSION = "Полученное выражение: %s %s %s = %s";
     private static final String GENERAL_EXCEPTION_MESSAGE = "Ввели неправильные данные";
     private static final String INPUT_EXPRESSION = "Введите выражение: ";
+    private final Evaluator evaluator = new Evaluator();
 
     public void printInputFirstValue() {
         System.out.print(INPUT_FIRST_VALUE);
@@ -32,5 +35,10 @@ public class ConsolePrinter {
 
     public void printInputExpression() {
         System.out.print(INPUT_EXPRESSION);
+    }
+
+    public void printResultExpression(int firstValue, int secondValue, String command) {
+        int result = evaluator.getResult(firstValue, secondValue, command);
+        System.out.println("Результат: " + firstValue + " " + command + " " + secondValue + " = " + result);
     }
 }
